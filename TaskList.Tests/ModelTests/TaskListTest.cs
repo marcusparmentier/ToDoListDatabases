@@ -70,5 +70,19 @@ namespace ToDoList.Tests
           //Assert
           Assert.AreEqual(testId, result);
         }
+
+        [TestMethod]
+        public void Find_FindsTaskInDatabase_Task()
+        {
+          //Arrange
+          Task testTask = new Task("Mow the lawn");
+          testTask.Save();
+
+          //Act
+          Task foundTask = Task.Find(testTask.GetId());
+
+          //Assert
+          Assert.AreEqual(testTask, foundTask);
+        }
       }
 }
