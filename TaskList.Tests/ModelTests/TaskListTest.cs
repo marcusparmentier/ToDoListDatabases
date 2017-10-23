@@ -1,5 +1,6 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ToDoList.Models;
+using System.Collections.Generic;
 using System;
 
 
@@ -10,7 +11,7 @@ namespace ToDoList.Tests
     {
         public void Dispose()
         {
-            // Task.DeleteAll();
+            Task.DeleteAll();
         }
         public TaskListTests()
         {
@@ -38,21 +39,36 @@ namespace ToDoList.Tests
           Assert.AreEqual(firstTask, secondTask);
         }
 
-        // [TestMethod]
-        // public void Save_SavesToDatabase_TaskList()
-        // {
-        //   //Arrange
-        //   Task testTask = new Task("Mow the lawn");
-        //
-        //   //Act
-        //   testTask.Save();
-        //   List<Task> result = Task.GetAll();
-        //   List<Task> testList = new List<Task>{testTask};
-        //
-        //   //Assert
-        //   CollectionAssert.AreEqual(testList, result);
-        // }
+        [TestMethod]
+        public void Save_SavesToDatabase_TaskList()
+        {
+          //Arrange
+          Task testTask = new Task("Mow the lawn");
 
+          //Act
+          testTask.Save();
+          List<Task> result = Task.GetAll();
+          List<Task> testList = new List<Task>{testTask};
 
-    }
+          //Assert
+          CollectionAssert.AreEqual(testList, result);
+        }
+
+        [TestMethod]
+        public void Save_AssignsIdToObject_Id()
+        {
+          //Arrange
+          Task testTask = new Task("Mow the lawn");
+
+          //Act
+          testTask.Save();
+          Task savedTask = Task.GetAll()[0];
+
+          int result = savedTask.GetId();
+          int testId = testTask.GetId();
+
+          //Assert
+          Assert.AreEqual(testId, result);
+        }
+      }
 }
